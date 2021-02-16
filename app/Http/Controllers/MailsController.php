@@ -7,12 +7,35 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\TestMail;
 use App\Models\Client;
 use App\Models\Template;
+use App\Models\PlanedMail;
 
 class MailsController extends Controller
 {
     public function mailForClient(Request $request){
-        $this->sendMail($request['clientId'], $request['templateId']);
-        return redirect()->back();
+        if($request['planedTime'] != null){
+            $this->mailPlaning($request, $request['clientId']);
+            return redirect()->back()->with('message', 'Success! Email planed.');
+        }
+        else{
+            $this->sendMail($request['clientId'], $request['templateId']);
+            return redirect()->back()->with('message', 'Email sent successfully!');
+        }
+    }
+
+    public function mailForGroup(Request $request){
+        $clients = Client::where('group_id', $request['group_id'])->get();
+        if($request['planedTime'] != null){
+            foreach($clients as $client){
+                $this->mailPlaning($request, $client->id);
+            }
+            return redirect()->back()->with('message', 'Success! Emails planed.');
+        }
+        else {
+            foreach($clients as $client){
+                $this->sendMail($client->id, $request['templateId']);
+            }
+            return redirect()->back()->with('message', 'Emails sent successfully!');
+        }
     }
 
     public function sendMail($clientId, $templateId){
@@ -30,5 +53,17 @@ class MailsController extends Controller
         ];
 
         Mail::to($client->email)->send(new TestMail($details));
+    }
+
+    public function mailPlaning($request, $clientId){
+        $request->validate([
+            'planedTime' => 'after:'.date('Y-m-d H:i')
+            ]);
+
+            $planedMail = new PlanedMail();
+            $planedMail->clientID = $clientId;
+            $planedMail->templateID = $request['templateId'];
+            $planedMail->timeToSend = $request['planedTime'];
+            $planedMail->save();
     }
 }

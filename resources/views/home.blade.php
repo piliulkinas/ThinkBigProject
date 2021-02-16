@@ -2,6 +2,10 @@
 
 @section('content')
 <div class="container">
+    <div class="alert-danger">{{ $errors->first('planedTime') }}</div>
+    @if(session('message'))
+        <div class="alert-success">{{ session('message') }}</div>
+    @endif
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card p-3">
@@ -63,7 +67,7 @@
                             <form method="POST" action="sendEmailToGroup">
                                 @csrf
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Select what do you want to send</h4>
+                                    <h4 class="modal-title">Select additional information</h4>
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
                                 <div class="modal-body">
@@ -90,6 +94,10 @@
                                                         @endforeach
                                                     </select>
                                                 </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="justify-content-end">Set time</td>
+                                                <td><input type="datetime-local" id="planedTime" name="planedTime"> </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -132,7 +140,7 @@
                                 <button class="btn btn-sm btn-primary" id="MailToClient" type="button" data-toggle="modal" data-target="#sendEmailToClient{{ $client->id }}">Send email</button>
                                 <!-- send email to one client modal  -->
                                 <div class="modal fade" id="sendEmailToClient{{ $client->id }}" role="dialog">
-                                    <div class="modal-dialog modal-sm">
+                                    <div class="modal-dialog modal-lg text-center">
                                         <div class="modal-content">
                                             <form method="POST" action="sendEmailToClient">
                                                 @csrf
@@ -142,12 +150,28 @@
                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <label for="selectTemplate">Select template</label>
-                                                    <select class="form-control-sm" id="selectTemplate" name="templateId">
-                                                        @foreach ($templates as $template)
-                                                            <option value="{{ $template->id }}">{{ $template->name }}</option>
-                                                        @endforeach
-                                                    </select>  
+                                                    <table class="table">
+                                                        <tr>
+                                                            <thead>
+                                                                <th>Template</th>
+                                                                <th>Set time</th>
+                                                            </thead>
+                                                        </tr>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <select class="form-control-sm" id="selectTemplate" name="templateId">
+                                                                        @foreach ($templates as $template)
+                                                                            <option value="{{ $template->id }}">{{ $template->name }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="datetime-local" id="planedTime" name="planedTime"> 
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="submit" class="btn btn-primary">Send</button>

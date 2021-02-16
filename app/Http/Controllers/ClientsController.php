@@ -28,7 +28,7 @@ class ClientsController extends Controller
 
     public function deleteClient($id){
         Client::where('id',$id)->delete();
-        return redirect()->back();
+        return redirect()->back()->with('message', 'Client deleted successfully!');
     }
 
     public function updateClient(Request $request, $id){
@@ -39,7 +39,7 @@ class ClientsController extends Controller
             'email'     => $request['email'],
             'group_id'  => $request['group_id']
         ));
-        return redirect('/home');
+        return redirect('/home')->with('message', 'Client updated successfully!');
     }
 
     public function showClient($id){

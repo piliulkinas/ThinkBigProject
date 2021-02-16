@@ -31,12 +31,12 @@ class TemplatesController extends Controller
             'content'   => $request['content'],
             'created_at'=> date('Y-m-d H:i:s')
         ));
-        return redirect('/templates');
+        return redirect('/templates')->with('message', 'Template updated successfully!');
     }
 
     public function deleteTemplate($id){
         Template::where('id', $id)->delete();
-        return redirect()->back();
+        return redirect()->back()->with('message', 'Template deleted successfully!');
     }
 
     public function showTemplate($id){

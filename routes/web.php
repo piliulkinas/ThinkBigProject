@@ -54,3 +54,9 @@ Route::get('/templates/deleteTemplate/{id}', 'App\Http\Controllers\TemplatesCont
 //________Mails_____________________________________________________________________________
 
 Route::post('/sendEmailToClient', 'App\Http\Controllers\MailsController@mailForClient');
+
+Route::post('/sendEmailToGroup', 'App\Http\Controllers\MailsController@mailForGroup');
+
+Route::get('/scheduledEmails', 'App\Http\Controllers\ScheduledEmailsController@index');
+
+Route::get('/scheduledEmails/deletePlanedMail/{id}', 'App\Http\Controllers\ScheduledEmailsController@deleteScheduledEmail');

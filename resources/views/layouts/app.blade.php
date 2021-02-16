@@ -39,6 +39,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/templates">Templates <span class="sr-only">(current)</span></a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/scheduledEmails">Scheduled emails <span class="sr-only">(current)</span></a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
