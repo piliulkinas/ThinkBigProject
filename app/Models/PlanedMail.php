@@ -11,6 +11,8 @@ class PlanedMail extends Model
     protected $fillable = [
         'clientID',
         'templadeID',
-        'timeToSend'];
+        'timeToSend',
+        'repeat',
+        'validUntil'];
     public $timestamps = false;
 }

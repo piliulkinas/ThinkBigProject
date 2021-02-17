@@ -18,6 +18,8 @@ class CreatePlanedMailsTable extends Migration
             $table->integer('clientID');
             $table->integer('templateID');
             $table->dateTime('timeToSend');
+            $table->text('repeat');
+            $table->dateTime('validUntil')->nullable();
         });
     }
 

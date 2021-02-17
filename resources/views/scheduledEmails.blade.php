@@ -19,6 +19,8 @@
                             <th>Time to send</th>
                             <th>Template name</th>
                             <th>To</th>
+                            <th>Repeat</th>
+                            <th>Rule valid until</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -28,8 +30,10 @@
                             <td>{{ $planedMail->timeToSend }}</td>
                             <td>{{ $planedMail->name }}</td>
                             <td>{{ $planedMail->email }}</td>
+                            <td>{{ $planedMail->repeat }}</td>
+                            <td>{{ $planedMail->validUntil }}
                             <td>
-                                <a class="btn btn-sm btn-danger mr-1" role="button" href="scheduledEmails/deletePlanedMail/{{ $planedMail->id }}">Delete</a>
+                                <a class="btn btn-sm btn-danger mr-1" role="button" href="scheduledEmails/deletePlanedMail/{{ $planedMail->id }}">Cancel</a>
                             </td>
                         </tr>
                         @endforeach

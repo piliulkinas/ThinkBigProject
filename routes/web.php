@@ -51,6 +51,8 @@ Route::post('/templates/updateTemplate/{id}', 'App\Http\Controllers\TemplatesCon
 
 Route::get('/templates/deleteTemplate/{id}', 'App\Http\Controllers\TemplatesController@deleteTemplate');
 
+Route::get('/template/{id}', 'App\Http\Controllers\TemplatesController@readTemplate');
+
 //________Mails_____________________________________________________________________________
 
 Route::post('/sendEmailToClient', 'App\Http\Controllers\MailsController@mailForClient');

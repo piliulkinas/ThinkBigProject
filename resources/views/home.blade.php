@@ -39,9 +39,9 @@
                                             <th>Group</th>
                                         </tr>
                                         <tr>
-                                            <td><input type="text" name="name" id="name" placeholder="John"></td>
-                                            <td><input type="text" name="surname" id="surname" placeholder="Smith"></td>
-                                            <td><input type="email" name="email" id="email" placeholder="JohnSmith@smth.com"></td>
+                                            <td><input type="text" name="name" id="name" placeholder="John" required></td>
+                                            <td><input type="text" name="surname" id="surname" placeholder="Smith" required></td>
+                                            <td><input type="email" name="email" id="email" placeholder="JohnSmith@smth.com" required></td>
                                             <td>
                                                 <select class="form-control-sm" name="group_id">
                                                     @foreach ($groups as $group)
@@ -97,10 +97,47 @@
                                             </tr>
                                             <tr>
                                                 <td class="justify-content-end">Set time</td>
-                                                <td><input type="datetime-local" id="planedTime" name="planedTime"> </td>
+                                                <td><input type="datetime-local" id="planedTime" name="planedTime" onchange="displayDivRepeat('orrepeat', this)"> </td>
                                             </tr>
                                         </tbody>
                                     </table>
+                                    <div class="container" id="orrepeat">
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                Do you want to repeat this email?
+                                            </div>
+                                            <div class="col-sm">
+                                                <select class="form-control-sm"  onchange="displayDivDemo('hidden_tr', this)">
+                                                    <option value="0">No</option>
+                                                    <option value="1">Repeat</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div><br>
+                                    <div class="container" id="hidden_tr">
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <label for="repeat">To repeat</label>
+                                                    <select class="form-control-sm"  id="repeat" name="repeat">
+                                                        <option value="No">No</option>
+                                                        <option value="Every day">Every day</option>
+                                                        <option value="Every week">Every week</option>
+                                                        <option value="Every month">Every month</option>
+                                                        <option value="Every year">Every year</option>
+                                                    </select>
+                                                </label>
+                                            </div>
+                                            <div class="col-sm">
+                                                <label for="validUntil">How long</label>
+                                                <select class="form-control-sm" id="validUntil" name="validUntil">
+                                                    <option value="Week">Week</option>
+                                                    <option value="Month">Month</option>
+                                                    <option value="Year">Year</option>
+                                                </select>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary">Send</button>
@@ -167,11 +204,48 @@
                                                                     </select>
                                                                 </td>
                                                                 <td>
-                                                                    <input type="datetime-local" id="planedTime" name="planedTime"> 
+                                                                    <input type="datetime-local" id="planedTime" name="planedTime" onchange="displayDivRepeat('orrepeatforone', this)"> 
                                                                 </td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
+                                                    <div class="container" id="orrepeatforone">
+                                                        <div class="row">
+                                                            <div class="col-sm">
+                                                                Do you want to repeat this email?
+                                                            </div>
+                                                            <div class="col-sm">
+                                                                <select class="form-control-sm"  onchange="displayDivDemo('hidden_div', this)">
+                                                                    <option value="0">No</option>
+                                                                    <option value="1">Repeat</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div><br>
+                                                    <div class="container" id="hidden_div">
+                                                        <div class="row">
+                                                            <div class="col-sm">
+                                                                <label for="repeat">To repeat</label>
+                                                                    <select class="form-control-sm"  id="repeat" name="repeat">
+                                                                        <option value="No">No</option>
+                                                                        <option value="Every day">Every day</option>
+                                                                        <option value="Every week">Every week</option>
+                                                                        <option value="Every month">Every month</option>
+                                                                        <option value="Every year">Every year</option>
+                                                                    </select>
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-sm">
+                                                                <label for="validUntil">How long</label>
+                                                                <select class="form-control-sm" id="validUntil" name="validUntil">
+                                                                    <option value="Week">Week</option>
+                                                                    <option value="Month">Month</option>
+                                                                    <option value="Year">Year</option>
+                                                                </select>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="submit" class="btn btn-primary">Send</button>
@@ -191,3 +265,29 @@
     </div>
 </div>
 @endsection
+
+<style>
+#hidden_tr {
+    display: none;
+}
+#orrepeat {
+    display: none;
+}
+#orrepeatforone {
+    display: none;
+}
+#hidden_div {
+    display: none;
+}
+</style>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    function displayDivDemo(id, elementValue) {
+        document.getElementById(id).style.display = elementValue.value == 1 ? 'block' : 'none';
+    }
+    function displayDivRepeat(id, elementValue) {
+        document.getElementById(id).style.display = elementValue.value != null ? 'block' : 'none';
+    }
+</script>

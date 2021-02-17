@@ -2,6 +2,9 @@
 
 @section('content')
 <div class="container">
+    @if(session('errors'))
+        <div class="alert-danger">{{ $errors }}</div>
+    @endif
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card p-3">
@@ -23,9 +26,9 @@
                         <form method="POST" action="/updateClient/{{ $client->id }}">
                             @csrf
                             <tr>
-                                <td><input value="{{ $client->name }}" name="name"></td>
-                                <td><input value="{{ $client->surname }}" name="surname"></td>
-                                <td><input value="{{ $client->email }}" name="email"></td>
+                                <td><input value="{{ $client->name }}" name="name" required></td>
+                                <td><input value="{{ $client->surname }}" name="surname" required></td>
+                                <td><input value="{{ $client->email }}" name="email" required></td>
                                 <td>
                                     <select class="form-control-sm" name="group_id">
                                         @foreach($groups as $group)

@@ -17,6 +17,7 @@ class ClientsController extends Controller
     }
 
     public function createClient(Request $request){
+        $this->validation($request);
         $client = new Client();
         $client->name = $request['name'];
         $client->surname = $request['surname'];
@@ -32,6 +33,7 @@ class ClientsController extends Controller
     }
 
     public function updateClient(Request $request, $id){
+        $this->validation($request);
         Client::where('id',$id)
         ->update(array(
             'name'      => $request['name'],
@@ -61,5 +63,13 @@ class ClientsController extends Controller
     public function getTemplates(){
         $templates = Template::all()->sortByDesc('created_at');
         return $templates;
+    }
+
+    public function validation($request){
+        $request->validate([
+            'name'  => 'required|max:100',
+            'surname' => 'required|max:100',
+            'email' => 'required|email|max:255',
+        ]);
     }
 }

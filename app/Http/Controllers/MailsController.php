@@ -8,6 +8,8 @@ use App\Mail\TestMail;
 use App\Models\Client;
 use App\Models\Template;
 use App\Models\PlanedMail;
+use DateInterval;
+use Carbon\Carbon;
 
 class MailsController extends Controller
 {
@@ -56,14 +58,36 @@ class MailsController extends Controller
     }
 
     public function mailPlaning($request, $clientId){
+        date_default_timezone_set('Europe/Vilnius');
         $request->validate([
             'planedTime' => 'after:'.date('Y-m-d H:i')
             ]);
-
+            $validUntil = $this->validUntil($request['validUntil']);
             $planedMail = new PlanedMail();
             $planedMail->clientID = $clientId;
             $planedMail->templateID = $request['templateId'];
             $planedMail->timeToSend = $request['planedTime'];
+            $planedMail->repeat = $request['repeat'];
+            if($request['repeat'] != "No"){
+                $planedMail->validUntil = $validUntil;
+            }
             $planedMail->save();
+    }
+
+    public function validUntil($e){
+        
+        switch($e){
+            case null:
+                return null;
+            case "Week":
+                $after = Carbon::now()->addWeek();
+                return $after;
+            case "Month":
+                $after = Carbon::now()->addMonth();
+                return $after;
+            case "Year":
+                $after = Carbon::now()->addYear();
+                return $after;
+        }
     }
 }

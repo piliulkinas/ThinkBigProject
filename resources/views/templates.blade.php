@@ -2,6 +2,9 @@
 
 @section('content')
 <div class="container">
+    @if(session('errors'))
+        <div class="alert-danger">{{ $errors }}</div>
+    @endif
     @if(session('message'))
         <div class="alert-success">{{ session('message') }}</div>
     @endif
@@ -65,7 +68,7 @@
                     <tbody>
                         @foreach($templates as $template)
                         <tr>
-                            <td>{{ $template->name }}</td>
+                            <td><a href="/template/{{ $template->id }}">{{ $template->name }}</a></td>
                             <td>{{ $template->title }}</td>
                             <td>{{ $template->created_at }}</td>
                             <td>

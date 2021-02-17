@@ -14,6 +14,7 @@ class TemplatesController extends Controller
     }
 
     public function createTemplate(Request $request){
+        $this->validation($request);
         $template = new Template();
         $template->name = $request['name'];
         $template->title = $request['title'];
@@ -24,6 +25,7 @@ class TemplatesController extends Controller
     }
 
     public function updateTemplate(Request $request, $id){
+        $this->validation($request);
         Template::where('id', $id)
         ->update(array(
             'name'      => $request['name'],
@@ -39,6 +41,11 @@ class TemplatesController extends Controller
         return redirect()->back()->with('message', 'Template deleted successfully!');
     }
 
+    public function readTemplate($id){
+        $template = Template::where('id',$id)->first();
+        return view('showTemplate')->with('template', $template);
+    }
+
     public function showTemplate($id){
         $template = Template::where('id', $id)->first();
         return view('updateTemplate')->with('template', $template);
@@ -47,5 +54,13 @@ class TemplatesController extends Controller
     public function getTemplates(){
         $templates = Template::all()->sortByDesc('created_at');
         return $templates;
+    }
+
+    public function validation($request){
+        $request->validate([
+            'name'  => 'required|max:200',
+            'title' => 'required|max:2000',
+            'content' => 'required|max:10000',
+        ]);
     }
 }
