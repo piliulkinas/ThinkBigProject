@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <div class="alert-danger">{{ $errors->first('planedTime') }}</div>
+    <div class="alert-danger">{{ $errors->first('planedTime') }} {{ $errors->first('email') }}</div>
     @if(session('message'))
         <div class="alert-success">{{ session('message') }}</div>
     @endif

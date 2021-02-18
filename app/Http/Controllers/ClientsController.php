@@ -69,7 +69,7 @@ class ClientsController extends Controller
         $request->validate([
             'name'  => 'required|max:100',
             'surname' => 'required|max:100',
-            'email' => 'required|email|max:255',
+            'email' => 'required|email|max:255|unique:clients,email',
         ]);
     }
 }
